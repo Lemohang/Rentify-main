@@ -1,31 +1,95 @@
-import React from 'react'
-import Link from 'next/link';
-import { Button } from './ui/button';
-
-export default function Navbar() {
+"use client";
+import {
+  Navbar,
+  NavBody,
+  NavItems,
+  MobileNav,
+  NavbarLogo,
+  NavbarButton,
+  MobileNavHeader,
+  MobileNavToggle,
+  MobileNavMenu,
+} from "@/components/ui/resizable-navbar";
+import { useState } from "react";
+ 
+export function Nav() {
+  const navItems = [
+    {
+      name: "Features",
+      link: "#features",
+    },
+    {
+      name: "Pricing",
+      link: "#pricing",
+    },
+    {
+      name: "Contact",
+      link: "#contact",
+    },
+  ];
+ 
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+ 
   return (
-    <div>
-        <nav className="flex justify-between items-center px-6 py-4 z-10 relative bg-transparent">
-        <div className="text-lg font-bold">Logo</div>
-        <ul className="flex gap-6">
-          <li><Link href="/">Home </Link></li>
-          <li><Link href="about">About Us</Link></li>
-          <li><Link href="properties">Properties</Link></li>
-          <li><Link href="dashboard">Dashboard</Link></li>
-          <li><Link href="blog">Blog</Link></li>
-          <li className="relative group">
-            <Link href="contact">Contact Us</Link>
-            <ul className="absolute hidden group-hover:block bg-white text-black mt-2 rounded shadow-md p-2">
-              <li><Link href="#">Email</Link></li>
-              <li><Link href="#">Phone</Link></li>
-            </ul>
-          </li>
-        </ul>
-        <div className="flex gap-2">
-          <Button className="rounded-full border-white text-white hover:bg-white hover:text-black">Join</Button>
-          <Button className="rounded-full bg-[#c29d84] text-black hover:opacity-90">Login</Button>
-        </div>
-      </nav>
+    <div className="relative w-full">
+      <Navbar>
+        {/* Desktop Navigation */}
+        <NavBody>
+          <NavbarLogo />
+          <NavItems items={navItems} />
+          <div className="flex items-center gap-4">
+            <NavbarButton variant="secondary">Login</NavbarButton>
+            <NavbarButton variant="primary">Book a call</NavbarButton>
+          </div>
+        </NavBody>
+ 
+        {/* Mobile Navigation */}
+        <MobileNav>
+          <MobileNavHeader>
+            <NavbarLogo />
+            <MobileNavToggle
+              isOpen={isMobileMenuOpen}
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            />
+          </MobileNavHeader>
+ 
+          <MobileNavMenu
+            isOpen={isMobileMenuOpen}
+            onClose={() => setIsMobileMenuOpen(false)}
+          >
+            {navItems.map((item, idx) => (
+              <a
+                key={`mobile-link-${idx}`}
+                href={item.link}
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="relative text-neutral-600 dark:text-neutral-300"
+              >
+                <span className="block">{item.name}</span>
+              </a>
+            ))}
+            <div className="flex w-full flex-col gap-4">
+              <NavbarButton
+                onClick={() => setIsMobileMenuOpen(false)}
+                variant="primary"
+                className="w-full"
+              >
+                Login
+              </NavbarButton>
+              <NavbarButton
+                onClick={() => setIsMobileMenuOpen(false)}
+                variant="primary"
+                className="w-full"
+              >
+                Book a call
+              </NavbarButton>
+            </div>
+          </MobileNavMenu>
+        </MobileNav>
+      </Navbar>
+  
+ 
+      {/* Navbar */}
     </div>
-  )
+  );
 }
+export default Nav;
