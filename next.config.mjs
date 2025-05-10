@@ -8,7 +8,9 @@ const nextConfig = {
       'utfs.io',
       'images.unsplash.com',
       'pbs.twimg.com',
-      'i.postimg.cc', 
+      'i.postimg.cc',
+      'tailwindcss.com',
+      'via.placeholder.com', 
     ],
   },
 };
