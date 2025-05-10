@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter as FontSans, Inter } from "next/font/google"
 import "./globals.css";
+import Footer from "@/components/ui/Footer";
 
 const geistSans = Inter({
   variable: "--font-geist-sans",
@@ -23,6 +24,7 @@ export default function RootLayout({
         className={`${geistSans.variable} antialiased bg-white text-black`}
       >
         {children}
+        <Footer/>
       </body>
     </html>
   );

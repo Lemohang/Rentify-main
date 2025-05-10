@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -8,7 +8,7 @@ const rentals = [
     price: "M600/mo",
     rating: 4,
     distance: "1 mile from campus",
-    image: "/public/globe.svg",
+    image: "/a.jpg",
   },
   {
     id: 2,
@@ -22,14 +22,14 @@ const rentals = [
     price: "M500/mo",
     rating: 3,
     distance: "2 miles from campus",
-    image: "https://via.placeholder.com/400x300",
+    image: "/b.jpg",
   },
   {
     id: 4,
     price: "M650/mo",
     rating: 4,
     distance: "0.8 miles from campus",
-    image: "https://via.placeholder.com/400x300",
+    image: "/c.jpeg",
   },
 ];
 
@@ -44,7 +44,7 @@ export default function Rentals() {
     const { name, value } = e.target;
     setFilters((prevFilters) => ({
       ...prevFilters,
-      price: { ...prevFilters.price, [name]: value },
+      price: { ...prevFilters.price, [name]: Number(value) },
     }));
   };
 
@@ -55,7 +55,6 @@ export default function Rentals() {
     }));
   };
 
-  // Corrected the event type for handleDistanceChange
   const handleDistanceChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setFilters((prevFilters) => ({
       ...prevFilters,
@@ -75,38 +74,38 @@ export default function Rentals() {
 
   return (
     <div className="bg-gray-100 py-16 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto flex">
+      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-6">
         {/* Sidebar */}
-        <div className="w-1/4 bg-white p-6 rounded-lg shadow-md mr-6">
+        <div className="w-full lg:w-1/4 bg-white p-6 rounded-lg shadow-md">
           <h3 className="text-xl font-semibold text-gray-900 mb-4">Filters</h3>
 
           {/* Price Range */}
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">Price</label>
-            <div className="flex justify-between text-sm text-gray-600 mt-1">
-              <input
-                type="range"
-                name="min"
-                min="0"
-                max="1000"
-                value={filters.price.min}
-                onChange={handlePriceChange}
-                className="w-full"
-              />
-              <span>M{filters.price.min}</span>
-            </div>
-            <div className="flex justify-between text-sm text-gray-600 mt-2">
-              <input
-                type="range"
-                name="max"
-                min="0"
-                max="1000"
-                value={filters.price.max}
-                onChange={handlePriceChange}
-                className="w-full"
-              />
-              <span>M{filters.price.max}</span>
-            </div>
+            <label className="block text-sm font-medium text-gray-700">Min Price (M)</label>
+            <input
+              type="range"
+              name="min"
+              min="0"
+              max="1000"
+              value={filters.price.min}
+              onChange={handlePriceChange}
+              className="w-full"
+            />
+            <span className="text-sm text-gray-600">M{filters.price.min}</span>
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700">Max Price (M)</label>
+            <input
+              type="range"
+              name="max"
+              min="0"
+              max="1000"
+              value={filters.price.max}
+              onChange={handlePriceChange}
+              className="w-full"
+            />
+            <span className="text-sm text-gray-600">M{filters.price.max}</span>
           </div>
 
           {/* Rating */}
@@ -130,7 +129,7 @@ export default function Rentals() {
             <label className="block text-sm font-medium text-gray-700">Distance</label>
             <select
               value={filters.distance}
-              onChange={handleDistanceChange} 
+              onChange={handleDistanceChange}
               className="w-full mt-2 p-2 border rounded-md"
             >
               <option value="All">All</option>
@@ -142,7 +141,7 @@ export default function Rentals() {
         </div>
 
         {/* Rentals Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-3/4">
+        <div className="w-full lg:w-3/4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {filteredRentals.map((rental) => (
             <div key={rental.id} className="bg-white rounded-lg shadow p-4">
               <Image
